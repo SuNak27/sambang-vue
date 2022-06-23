@@ -77,9 +77,7 @@
             "
           >
             <!--begin::Title-->
-            <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">
-              {{ $route.name }}
-            </h1>
+
             <!--end::Title-->
           </div>
           <!--end::Page title-->
@@ -132,12 +130,13 @@
                     <!--begin::Username-->
                     <div class="d-flex flex-column">
                       <div class="fw-bolder d-flex align-items-center fs-5">
-                        {{ user.nama }}
+                        <!-- {{ user.nama }} -->
+                        Sabil
                       </div>
                       <a
                         href="#"
                         class="fw-bold text-muted text-hover-primary fs-7"
-                        >{{ user.username }}</a
+                        >username</a
                       >
                     </div>
                     <!--end::Username-->
@@ -173,19 +172,19 @@
 
 <script>
 import Swal from "sweetalert2";
-const token = localStorage.getItem("token");
-const parseJwt = (token) => {
-  try {
-    return JSON.parse(atob(token.split(".")[1]));
-  } catch (e) {
-    return null;
-  }
-};
+// const token = localStorage.getItem("token");
+// const parseJwt = (token) => {
+//   try {
+//     return JSON.parse(atob(token.split(".")[1]));
+//   } catch (e) {
+//     return null;
+//   }
+// };
 export default {
   name: "Header",
   data() {
     return {
-      user: parseJwt(token),
+      // user: parseJwt(token),
     };
   },
   methods: {

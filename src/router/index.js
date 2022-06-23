@@ -14,11 +14,29 @@ import Informasi from "../views/Informasi.vue";
 import Print from "../views/Print.vue";
 
 import axios from "axios";
+import NProgress from "nprogress";
+import "@/assets/css/nprogress.css";
 
 axios.defaults.headers.common["X-Sambang-Token"] =
   localStorage.getItem("token");
 
 axios.defaults.baseURL = "http://localhost:3000/";
+NProgress.configure({ showSpinner: false });
+axios.interceptors.request.use((config) => {
+  NProgress.start();
+  return config;
+});
+
+axios.interceptors.response.use(
+  (response) => {
+    NProgress.done();
+    return response;
+  },
+  (error) => {
+    NProgress.done();
+    return error;
+  }
+);
 
 Vue.use(VueRouter);
 
@@ -27,6 +45,9 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+    meta: {
+      title: "Login",
+    },
   },
   {
     path: "/",
@@ -36,6 +57,9 @@ const routes = [
         path: "/",
         name: "Home",
         component: Home,
+        meta: {
+          title: "Home",
+        },
       },
       {
         path: "/settingHari",
@@ -43,6 +67,7 @@ const routes = [
         component: SettingHari,
         meta: {
           is_admin: true,
+          title: "Setting Hari",
         },
       },
       {
@@ -51,32 +76,48 @@ const routes = [
         component: Shift,
         meta: {
           is_admin: true,
+          title: "Shift",
         },
       },
       {
         path: "/reservasi",
         name: "Reservasi",
         component: Reservasi,
+        meta: {
+          title: "Reservasi",
+        },
       },
       {
         path: "/tambah_reservasi",
         name: "Tambah Reservasi",
         component: TambahReservasi,
+        meta: {
+          title: "Tambah Rservasi",
+        },
       },
       {
         path: "/reservasi/:id",
         name: "Detail Reservasi",
         component: DetailReservasi,
+        meta: {
+          title: "Detail Reservasi",
+        },
       },
       {
         path: "/history",
         name: "History",
         component: History,
+        meta: {
+          title: "History",
+        },
       },
       {
         path: "/print",
         name: "Print",
         component: Print,
+        meta: {
+          title: "Print",
+        },
       },
       {
         path: "/informasi",
@@ -84,6 +125,7 @@ const routes = [
         component: Informasi,
         meta: {
           is_admin: true,
+          title: "Informasi",
         },
       },
     ],
@@ -105,7 +147,8 @@ router.beforeEach((to, from, next) => {
       return null;
     }
   };
-  document.title = `${process.env.VUE_APP_TITLE} - ${to.name}`;
+  document.title = `${process.env.VUE_APP_TITLE} - ${to.meta.title}`;
+  next();
   if (to.name !== "Login" && token == null) {
     next({ name: "Login" });
   } else if (to.name === "Login" && token) {

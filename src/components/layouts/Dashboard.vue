@@ -16,7 +16,9 @@
             <div class="post d-flex flex-column-fluid" id="kt_post">
               <!--begin::Container-->
               <div id="kt_content_container" class="container-xxl">
-                <router-view></router-view>
+                <Transition name="slide-fade" mode="out-in">
+                  <router-view></router-view>
+                </Transition>
               </div>
               <!--end::Container-->
             </div>
@@ -77,4 +79,15 @@ export default {
 </script>
 
 <style>
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
+}
 </style>

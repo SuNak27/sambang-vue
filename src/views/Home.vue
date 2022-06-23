@@ -1,6 +1,8 @@
 <template>
   <div class="home">
     <!--begin::Row-->
+    <Crud v-bind="{ url: '/reservasi' }" @data="getReservasi" />
+    <Crud v-bind="{ url: '/pertemuan/1' }" @data="getPertemuan" />
     <div class="row g-5 g-xl-8">
       <!--begin::Col-->
       <div class="col-xl-12">
@@ -101,6 +103,7 @@
                           href="#"
                           data-bs-toggle="modal"
                           :data-bs-target="'#edit_pertemuan_' + pertemuan.id"
+                          @mouseover="edit = pertemuan.id"
                           title="Edit Pertemuan"
                           class="
                             btn
@@ -129,206 +132,10 @@
                               /></svg
                           ></span>
                         </a>
-
-                        <div
-                          class="modal fade"
-                          :id="'edit_pertemuan_' + pertemuan.id"
-                          tabindex="-1"
-                          aria-hidden="true"
-                        >
-                          <!--begin::Modal dialog-->
-                          <div
-                            class="modal-dialog modal-dialog-centered mw-650px"
-                          >
-                            <!--begin::Modal content-->
-                            <div class="modal-content rounded">
-                              <!--begin::Modal header-->
-                              <div
-                                class="
-                                  modal-header
-                                  pb-0
-                                  border-0
-                                  justify-content-end
-                                "
-                              >
-                                <!--begin::Close-->
-                                <div
-                                  class="
-                                    btn btn-sm btn-icon btn-active-color-primary
-                                  "
-                                  data-bs-dismiss="modal"
-                                >
-                                  <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                  <span class="svg-icon svg-icon-1">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                    >
-                                      <rect
-                                        opacity="0.5"
-                                        x="6"
-                                        y="17.3137"
-                                        width="16"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(-45 6 17.3137)"
-                                        fill="black"
-                                      />
-                                      <rect
-                                        x="7.41422"
-                                        y="6"
-                                        width="16"
-                                        height="2"
-                                        rx="1"
-                                        transform="rotate(45 7.41422 6)"
-                                        fill="black"
-                                      />
-                                    </svg>
-                                  </span>
-                                  <!--end::Svg Icon-->
-                                </div>
-                                <!--end::Close-->
-                              </div>
-                              <!--begin::Modal header-->
-                              <!--begin::Modal body-->
-                              <div
-                                class="
-                                  modal-body
-                                  scroll-y
-                                  px-10 px-lg-15
-                                  pt-0
-                                  pb-15
-                                "
-                              >
-                                <!--begin:Form-->
-                                <form
-                                  id="kt_modal_new_target_form"
-                                  v-on:submit.prevent
-                                  class="form"
-                                >
-                                  <!--begin::Heading-->
-                                  <div class="mb-13 text-center">
-                                    <!--begin::Title-->
-                                    <h1 class="mb-3">
-                                      Edit Data Pertemuan / Kunjungan
-                                    </h1>
-                                    <!--end::Title-->
-                                  </div>
-                                  <!--end::Heading-->
-                                  <!--begin::Input group-->
-                                  <div class="d-flex flex-column mb-8 fv-row">
-                                    <!--begin::Label-->
-                                    <label
-                                      class="
-                                        d-flex
-                                        align-items-center
-                                        fs-6
-                                        fw-bold
-                                        mb-2
-                                      "
-                                    >
-                                      <span class="required"
-                                        >Batas Kunjungan / Bulan</span
-                                      >
-                                    </label>
-                                    <!--end::Label-->
-                                    <input
-                                      type="number"
-                                      name="batas_sambang"
-                                      id="batas_sambang"
-                                      v-model="pertemuan.batas_sambang"
-                                      class="form-control"
-                                    />
-                                  </div>
-                                  <!--end::Input group-->
-                                  <!--begin::Input group-->
-                                  <div class="d-flex flex-column mb-8 fv-row">
-                                    <!--begin::Label-->
-                                    <label
-                                      class="
-                                        d-flex
-                                        align-items-center
-                                        fs-6
-                                        fw-bold
-                                        mb-2
-                                      "
-                                    >
-                                      <span class="required"
-                                        >Batas Tamu / Kunjungan</span
-                                      >
-                                    </label>
-                                    <!--end::Label-->
-                                    <input
-                                      type="number"
-                                      name="batas_tamu"
-                                      id="batas_tamu"
-                                      v-model="pertemuan.batas_tamu"
-                                      class="form-control"
-                                    />
-                                  </div>
-                                  <!--end::Input group-->
-                                  <!--begin::Input group-->
-                                  <div class="d-flex flex-column mb-8 fv-row">
-                                    <!--begin::Label-->
-                                    <label
-                                      class="
-                                        d-flex
-                                        align-items-center
-                                        fs-6
-                                        fw-bold
-                                        mb-2
-                                      "
-                                    >
-                                      <span class="required"
-                                        >Batas Waktu / Kunjungan (Menit)</span
-                                      >
-                                    </label>
-                                    <!--end::Label-->
-                                    <input
-                                      type="number"
-                                      name="waktu"
-                                      id="waktu"
-                                      v-model="pertemuan.waktu"
-                                      class="form-control"
-                                    />
-                                  </div>
-                                  <!--end::Input group-->
-                                  <!--begin::Actions-->
-                                  <div class="text-center">
-                                    <button
-                                      type="submit"
-                                      id="edit_pertemuan"
-                                      class="btn btn-primary"
-                                      @click="simpanPertemuan()"
-                                    >
-                                      <span class="indicator-label"
-                                        >Submit</span
-                                      >
-                                      <span class="indicator-progress"
-                                        >Please wait...
-                                        <span
-                                          class="
-                                            spinner-border spinner-border-sm
-                                            align-middle
-                                            ms-2
-                                          "
-                                        ></span
-                                      ></span>
-                                    </button>
-                                  </div>
-                                  <!--end::Actions-->
-                                </form>
-                                <!--end:Form-->
-                              </div>
-                              <!--end::Modal body-->
-                            </div>
-                            <!--end::Modal content-->
-                          </div>
-                          <!--end::Modal dialog-->
-                        </div>
+                        <EditPertemuan
+                          v-if="edit == pertemuan.id"
+                          :res="pertemuan"
+                        />
                       </td>
                     </tr>
                   </tbody>
@@ -466,6 +273,8 @@
 
 <script>
 import Chart from "@/components/Chart.vue";
+import Crud from "@/components/Crud.vue";
+import EditPertemuan from "@/components/Edit/EditPertemuan.vue";
 import axios from "axios";
 import $ from "jquery";
 import Swal from "sweetalert2";
@@ -482,10 +291,13 @@ export default {
   name: "Home",
   components: {
     Chart,
+    Crud,
+    EditPertemuan,
   },
   data() {
     return {
       no: 1,
+      edit: 0,
       reservasi: [],
       pertemuan: {},
       currentTime: null,
@@ -498,6 +310,18 @@ export default {
     },
     formatTime(jam) {
       return moment.unix(jam).format("HH:mm");
+    },
+    getReservasi(value) {
+      this.reservasi = value;
+      $(document).ready(function () {
+        $("#reservasi").DataTable({
+          responsive: true,
+          ordering: false,
+        });
+      });
+    },
+    getPertemuan(value) {
+      this.pertemuan = value.data;
     },
     hadir(id, no) {
       Swal.fire({
@@ -538,102 +362,6 @@ export default {
         }
       });
     },
-    simpanPertemuan() {
-      var e = document.querySelector("#edit_pertemuan");
-      e.setAttribute("data-kt-indicator", "on");
-      if (
-        this.pertemuan.batas_sambang != 0 &&
-        this.pertemuan.batas_tamu != 0 &&
-        this.pertemuan.waktu != 0
-      ) {
-        setTimeout(function () {
-          e.removeAttribute("data-kt-indicator");
-        }, 2e3);
-        axios
-          .put("/pertemuan/1", this.pertemuan)
-          .then(
-            Swal.fire({
-              title: "Berhasil",
-              text: "Data telah diubah",
-              icon: "success",
-              buttonsStyling: !1,
-              confirmButtonText: "Ok!",
-              customClass: {
-                confirmButton: "btn btn-primary",
-              },
-            }).then(() => {
-              this.$router.go();
-            })
-          )
-          .catch((error) => console.log(error));
-      } else {
-        setTimeout(function () {
-          e.removeAttribute("data-kt-indicator"),
-            Swal.fire({
-              title: "Gagal!",
-              text: "Terdapat data yang salah atau kosong! Refresh halaman untuk cancel",
-              icon: "error",
-              buttonsStyling: !1,
-              confirmButtonText: "Coba lagi!",
-              customClass: { confirmButton: "btn btn-primary" },
-            });
-        }, 2e3);
-      }
-    },
-  },
-  mounted() {
-    axios
-      .get("/reservasi")
-      .then((r) => {
-        this.reservasi = r.data;
-        $(document).ready(function () {
-          $("#reservasi").DataTable({
-            ordering: false,
-          });
-        });
-      })
-      .catch(function (error) {
-        if (error.response.status === 401) {
-          Swal.fire({
-            text: "Sesi telah berakhir, silahkan login kembali",
-            icon: "error",
-            buttonsStyling: !1,
-            confirmButtonText: "Ok",
-            customClass: {
-              confirmButton: "btn btn-primary order-2",
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              localStorage.removeItem("token");
-              window.location.href = "/login";
-            }
-          });
-        }
-      });
-
-    axios
-      .get("/pertemuan/1")
-      .then((r) => {
-        this.pertemuan = r.data.data;
-      })
-      .catch(function (error) {
-        if (error.response.status === 401) {
-          Swal.fire({
-            text: "Sesi telah berakhir, silahkan login kembali",
-            icon: "error",
-            buttonsStyling: !1,
-            confirmButtonText: "Ok",
-            customClass: {
-              confirmButton: "btn btn-primary order-2",
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              localStorage.removeItem("token");
-              window.location.href = "/login";
-            }
-          });
-        }
-      });
   },
   created() {
     this.currentTime = moment().format("X");
