@@ -112,6 +112,32 @@
               <span class="menu-title">Shift</span>
             </router-link>
           </div>
+          <div class="menu-item">
+            <router-link
+              :class="
+                $route.name == 'SettingHari' ? 'menu-link active' : 'menu-link'
+              "
+              to="/hari"
+            >
+              <span class="menu-icon">
+                <i class="bi bi-calendar2-day fs-3"></i>
+              </span>
+              <span class="menu-title">Setting Hari</span>
+            </router-link>
+          </div>
+          <div class="menu-item">
+            <router-link
+              :class="
+                $route.name == 'Santri' ? 'menu-link active' : 'menu-link'
+              "
+              to="/santri"
+            >
+              <span class="menu-icon">
+                <i class="bi bi-people fs-3"></i>
+              </span>
+              <span class="menu-title">Santri</span>
+            </router-link>
+          </div>
         </div>
         <!--end::Menu-->
       </div>

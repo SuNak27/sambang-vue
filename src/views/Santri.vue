@@ -1,10 +1,14 @@
 <template>
-  <div class="home">
+  <div class="santri">
     <!--begin::Row-->
     <CrudOnePage v-bind="crudOnePage" @modal="closeModal" />
     <Crud
       v-bind="{
-        multipleUrl: [{ url: '/shift' }],
+        multipleUrl: [
+          { url: '/santri' },
+          { url: '/lembaga' },
+          { url: '/wilayah' },
+        ],
       }"
       @multipleResponse="multipleUrl"
     />
@@ -12,7 +16,7 @@
       <div class="card mb-5 mb-xl-8">
         <div class="card-header">
           <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bolder fs-3 mb-1">Data Shift</span>
+            <span class="card-label fw-bolder fs-3 mb-1">Data Santri</span>
           </h3>
           <div class="card-toolbar">
             <div
@@ -23,7 +27,7 @@
                 href="#"
                 class="btn btn-sm btn-success w-150px"
                 data-bs-toggle="modal"
-                data-bs-target="#tambah_shift"
+                data-bs-target="#tambah_santri"
                 type="button"
                 @mouseover="crud(null, null, 'create')"
                 >Tambah Data</a
@@ -34,7 +38,7 @@
         <div class="card-body py-3">
           <div class="table-responsive">
             <table
-              id="shift_table"
+              id="santri_table"
               class="table table-bordered dt-responsive nowrap"
               style="width: 100%"
             >
@@ -49,33 +53,42 @@
                   "
                 >
                   <th class="w-50px text-center">No</th>
-                  <th class="w-100px text-center">Nama Shift</th>
-                  <th class="w-100px text-center">Jam Mulai</th>
-                  <th class="w-100px text-center">Jam Akhir</th>
-                  <th class="w-100px text-center">Kapasitas</th>
+                  <th class="w-100px text-center">NIS</th>
+                  <th class="w-100px text-center">Nama Santri</th>
+                  <th class="w-100px text-center">Wilayah</th>
+                  <th class="w-100px text-center">Lembaga</th>
+                  <th class="w-100px text-center">Jenis Kelamin</th>
                   <th class="w-100px text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  v-for="(shift, no) in setShift.data"
-                  :key="shift.id"
+                  v-for="(santri, no) in setSantri.data"
+                  :key="santri.id_santri"
                   class="text-center"
                 >
                   <td>{{ ++no }}</td>
-                  <td>{{ shift.nama_shift }}</td>
-                  <td>{{ formatTime(shift.jam_mulai) }} WIB</td>
-                  <td>{{ formatTime(shift.jam_selesai) }} WIB</td>
-                  <td>{{ shift.kapasitas }}</td>
+                  <td>{{ santri.nis }}</td>
+                  <td>{{ santri.nama }}</td>
+                  <td>{{ santri.nama_wilayah }}</td>
+                  <td>{{ santri.nama_lembaga }}</td>
+                  <td>
+                    {{ santri.jenkel == "L" ? "Laki - Laki" : "Perempuan" }}
+                  </td>
                   <td class="text-center">
                     <a
                       data-toggle="tooltip"
                       data-bs-toggle="modal"
-                      :data-bs-target="'#edit_shift_' + shift.id_shift"
+                      :data-bs-target="'#edit_santri_' + santri.id_santri"
                       data-placement="top"
-                      title="Edit"
+                      title="View"
                       @mouseover="
-                        crud(shift.id_shift, shift, 'read', 'View Data')
+                        crud(
+                          santri.id_santri,
+                          santri,
+                          'read',
+                          'View Data Santri'
+                        )
                       "
                       href="#"
                       class="
@@ -87,11 +100,16 @@
                     <a
                       data-toggle="tooltip"
                       data-bs-toggle="modal"
-                      :data-bs-target="'#edit_shift_' + shift.id_shift"
+                      :data-bs-target="'#edit_santri_' + santri.id_santri"
                       data-placement="top"
                       title="Edit"
                       @mouseover="
-                        crud(shift.id_shift, shift, 'update', 'Edit Data Shift')
+                        crud(
+                          santri.id_santri,
+                          santri,
+                          'update',
+                          'Edit Data Santri'
+                        )
                       "
                       href="#"
                       class="
@@ -108,88 +126,111 @@
         </div>
       </div>
     </div>
-    <!--end::Table container-->
-
     <!--end::Row-->
   </div>
 </template>
 
 <script>
+import Crud from "@/components/Crud.vue";
 import CrudOnePage from "@/components/CrudOnePage.vue";
 import $ from "jquery";
-import moment from "moment";
-import Crud from "@/components/Crud.vue";
 export default {
-  name: "Shift",
+  name: "SettingHari",
   components: {
-    CrudOnePage,
     Crud,
+    CrudOnePage,
   },
   data() {
     return {
       no: 1,
-      setShift: [],
-      edit: 0,
+      setSantri: [],
       crudOnePage: {},
       crudField: [
         {
           type: "text",
-          title: "Nama Shift",
-          name: "nama_shift",
-          required: true,
-        },
-        {
-          type: "time",
-          title: "Jam Masuk",
-          name: "jam_mulai",
-          required: true,
-        },
-        {
-          type: "time",
-          title: "Jam Selesai",
-          name: "jam_selesai",
+          title: "UID Santri",
+          name: "uid_santri",
           required: true,
         },
         {
           type: "number",
-          title: "Kapasitas",
-          name: "kapasitas",
+          title: "NIS Santri",
+          name: "nis",
+          required: true,
+        },
+        {
+          type: "text",
+          title: "Nama Santri",
+          name: "nama",
           required: true,
         },
         {
           type: "select",
-          title: "Status",
-          name: "status",
+          title: "Jenis Kelamin",
+          name: "jenkel",
           required: true,
           data: [
             {
-              text: "Aktif",
-              value: "Aktif",
+              text: "Laki - Laki",
+              value: "L",
             },
             {
-              text: "Nonaktif",
-              value: "Nonaktif",
+              text: "Perempuan",
+              value: "P",
             },
           ],
           value: "",
+        },
+        {
+          type: "textarea",
+          title: "Alamat",
+          name: "alamat",
+          required: true,
         },
       ],
       defaultField: [],
     };
   },
   methods: {
-    formatTime(time) {
-      return moment(time, "HH:mm:ss").format("HH:mm");
-    },
     multipleUrl(value) {
-      if (value.url == "/shift") {
-        this.setShift = value;
+      if (value.url == "/santri") {
+        this.setSantri = value;
         $(document).ready(function () {
-          $("#shift_table").DataTable({
+          $("#santri_table").DataTable({
             responsive: true,
             ordering: false,
           });
         });
+      } else if (value.url == "/lembaga") {
+        const custom = {
+          type: "select",
+          title: "Lembaga",
+          name: "id_lembaga",
+          required: true,
+          data: value.data.map((item) => {
+            return {
+              value: item.id_lembaga,
+              text: item.nama_lembaga,
+            };
+          }),
+          value: "",
+        };
+        this.crudField.splice(3, 0, custom);
+      } else if (value.url == "/wilayah") {
+        const custom = {
+          type: "select",
+          title: "Wilayah",
+          name: "id_wilayah",
+          required: true,
+          data: value.data.map((item) => {
+            return {
+              value: item.id_wilayah,
+              text: item.nama_wilayah,
+            };
+          }),
+          value: "",
+        };
+        this.crudField.splice(4, 0, custom);
       }
     },
     closeModal(r) {
@@ -208,11 +249,11 @@ export default {
           element.value = "";
         }
         this.crudOnePage = {
-          idmodal: "tambah_shift",
+          idmodal: "tambah_santri",
           crud: "create",
-          name: "Tambah Data Shift",
+          name: "Tambah Data Santri",
           fields: this.crudField,
-          url: "/shift",
+          url: "/santri",
           method: "post",
           fieldDefaultAxios: this.defaultField,
         };
@@ -232,11 +273,11 @@ export default {
         }
 
         this.crudOnePage = {
-          idmodal: "edit_shift_" + id,
+          idmodal: "edit_santri_" + id,
           crud: crud,
           name: title,
           fields: this.crudField,
-          url: "/shift/" + id,
+          url: "/santri/" + id,
           method: "put",
           fieldDefaultAxios: this.defaultField,
         };
@@ -245,3 +286,6 @@ export default {
   },
 };
 </script>
+
+<style>
+</style>

@@ -6,6 +6,7 @@ import Login from "../views/Login.vue";
 import Home from "../views/Home.vue";
 import SettingHari from "../views/SettingHari.vue";
 import Shift from "../views/Shift.vue";
+import Santri from "../views/Santri.vue";
 import Reservasi from "../views/Reservasi.vue";
 import TambahReservasi from "../views/TambahReservasi.vue";
 import DetailReservasi from "../views/DetailReservasi.vue";
@@ -62,8 +63,8 @@ const routes = [
         },
       },
       {
-        path: "/settingHari",
-        name: "Setting Hari",
+        path: "/hari",
+        name: "SettingHari",
         component: SettingHari,
         meta: {
           is_admin: true,
@@ -126,6 +127,15 @@ const routes = [
         meta: {
           is_admin: true,
           title: "Informasi",
+        },
+      },
+      {
+        path: "/santri",
+        name: "Santri",
+        component: Santri,
+        meta: {
+          is_admin: true,
+          title: "Santri",
         },
       },
     ],
