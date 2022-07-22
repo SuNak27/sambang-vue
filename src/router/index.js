@@ -17,10 +17,10 @@ import axios from "axios";
 import NProgress from "nprogress";
 import "@/assets/css/nprogress.css";
 
-axios.defaults.headers.common["X-Sambang-Token"] =
-  localStorage.getItem("token");
+// axios.defaults.headers.common["X-Sambang-Token"] =
+//   localStorage.getItem("token");
 
-axios.defaults.baseURL = "http://localhost:3000/";
+axios.defaults.baseURL = "http://localhost:3000/api/";
 NProgress.configure({ showSpinner: false });
 axios.interceptors.request.use((config) => {
   NProgress.start();
@@ -34,7 +34,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     NProgress.done();
-    return error;
+    return Promise.reject(error);
   }
 );
 
@@ -139,31 +139,36 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("token");
-  const parseJwt = (token) => {
-    try {
-      return JSON.parse(atob(token.split(".")[1]));
-    } catch (e) {
-      return null;
-    }
-  };
   document.title = `${process.env.VUE_APP_TITLE} - ${to.meta.title}`;
   next();
-  if (to.name !== "Login" && token == null) {
-    next({ name: "Login" });
-  } else if (to.name === "Login" && token) {
-    next({ path: "/" });
-  } else {
-    if (to.matched.some((record) => record.meta.is_admin)) {
-      if (parseJwt(token).role === "sysadmin") {
-        next();
-      } else {
-        next({ path: "/" });
-      }
-    } else {
-      next();
-    }
-  }
 });
+
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem("token");
+//   const parseJwt = (token) => {
+//     try {
+//       return JSON.parse(atob(token.split(".")[1]));
+//     } catch (e) {
+//       return null;
+//     }
+//   };
+//   document.title = `${process.env.VUE_APP_TITLE} - ${to.meta.title}`;
+//   next();
+//   if (to.name !== "Login" && token == null) {
+//     next({ name: "Login" });
+//   } else if (to.name === "Login" && token) {
+//     next({ path: "/" });
+//   } else {
+//     if (to.matched.some((record) => record.meta.is_admin)) {
+//       if (parseJwt(token).role === "sysadmin") {
+//         next();
+//       } else {
+//         next({ path: "/" });
+//       }
+//     } else {
+//       next();
+//     }
+//   }
+// });
 
 export default router;

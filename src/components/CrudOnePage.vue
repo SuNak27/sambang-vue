@@ -137,6 +137,14 @@
 
               <template v-else>
                 <input
+                  v-if="field.type == 'number'"
+                  :readonly="crud == 'read' ? true : false"
+                  :type="field.type"
+                  v-model.number="field.value"
+                  class="form-control"
+                />
+                <input
+                  v-else
                   :readonly="crud == 'read' ? true : false"
                   :type="field.type"
                   v-model="field.value"

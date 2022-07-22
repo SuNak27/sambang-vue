@@ -1,211 +1,229 @@
 <template>
-  <div class="shift">
+  <div class="home">
     <!--begin::Row-->
+    <CrudOnePage v-bind="crudOnePage" @modal="closeModal" />
+    <Crud
+      v-bind="{
+        multipleUrl: [{ url: '/shift' }],
+      }"
+      @multipleResponse="multipleUrl"
+    />
     <div class="row g-5 g-xl-8">
-      <!--begin::Col-->
-      <div class="col-xl-12">
-        <!--begin::Tables Widget 1-->
-        <div class="card card-xl-stretch mb-xl-8">
-          <!--begin::Header-->
-          <div class="card-header border-0 pt-5">
-            <h3 class="card-title align-items-start flex-column">
-              <span class="card-label fw-bolder fs-3 mb-1">Data Shift</span>
-            </h3>
-            <div class="card-toolbar">
-              <div
-                class="d-flex justify-content-end"
-                data-kt-user-table-toolbar="base"
+      <div class="card mb-5 mb-xl-8">
+        <div class="card-header">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bolder fs-3 mb-1">Data Shift</span>
+          </h3>
+          <div class="card-toolbar">
+            <div
+              class="d-flex justify-content-end"
+              data-kt-user-table-toolbar="base"
+            >
+              <a
+                href="#"
+                class="btn btn-sm btn-success w-150px"
+                data-bs-toggle="modal"
+                data-bs-target="#tambah_shift"
+                type="button"
+                @mouseover="crud(null, null, 'create')"
+                >Tambah Data Shift</a
               >
-                <a
-                  href="#"
-                  class="btn btn-sm btn-success w-150px"
-                  data-bs-toggle="modal"
-                  data-bs-target="#tambah_shift"
-                  >Tambah Data</a
-                >
-
-                <TambahShift />
-              </div>
             </div>
-          </div>
-
-          <!--end::Header-->
-          <!--begin::Body-->
-          <div class="card-body py-3">
-            <!--begin::Table container-->
-            <div class="table-responsive">
-              <!--begin::Table-->
-              <table
-                id="shift"
-                class="table text-center table-row-bordered gy-5"
-              >
-                <thead>
-                  <tr class="fw-bolder fs-6">
-                    <th class="w-50px text-center">No.</th>
-                    <th class="w-100px text-center">Nama Shift</th>
-                    <th class="w-100px text-center">Jam Awal</th>
-                    <th class="w-100px text-center">Jam Akhir</th>
-                    <th class="w-100px text-center">Jumlah Santri</th>
-                    <th class="w-100px text-center">Status</th>
-                    <th class="w-100px text-center">Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(shift, no) in setShift.data" :key="shift.id">
-                    <td>{{ ++no }}</td>
-                    <td>{{ shift.nama_shift }}</td>
-                    <td>{{ shift.jam_awal }}</td>
-                    <td>{{ shift.jam_akhir }}</td>
-                    <td>{{ shift.jml_santri }}</td>
-                    <td
-                      :class="
-                        shift.status == 'Aktif' ? 'text-success' : 'text-danger'
-                      "
-                    >
-                      {{ shift.status }}
-                    </td>
-                    <td class="d-flex justify-content-center">
-                      <a
-                        data-toggle="tooltip"
-                        data-bs-toggle="modal"
-                        :data-bs-target="'#edit_shift_' + shift.id"
-                        data-placement="top"
-                        title="Edit"
-                        class="
-                          btn
-                          btn-icon
-                          btn-bg-warning
-                          btn-active-text-primary
-                          btn-sm
-                          me-2
-                        "
-                      >
-                        <span class="bi bi-pencil" aria-hidden="true"></span
-                      ></a>
-                      <EditShift :res="shift" />
-                      <a
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Aktifkan"
-                        class="
-                          btn
-                          btn-icon
-                          btn-bg-success
-                          btn-active-text-primary
-                          btn-sm
-                          me-1
-                        "
-                        v-if="shift.status == 'Nonaktif'"
-                        @click="clickAktif(--no, shift.id)"
-                      >
-                        <span
-                          class="bi bi-power text-white"
-                          aria-hidden="true"
-                        ></span>
-                      </a>
-                      <a
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Nonaktifkan"
-                        class="
-                          btn
-                          btn-icon
-                          btn-bg-danger
-                          btn-active-text-primary
-                          btn-sm
-                          me-1
-                        "
-                        v-else
-                        @click="clickNonaktif(--no, shift.id)"
-                      >
-                        <span
-                          class="bi bi-power text-white"
-                          aria-hidden="true"
-                        ></span>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <!--end::Table-->
-            </div>
-            <!--end::Table container-->
           </div>
         </div>
-        <!--endW::Tables Widget 1-->
+        <div class="card-body py-3">
+          <div class="table-responsive">
+            <table
+              id="shift_table"
+              class="table table-bordered dt-responsive nowrap"
+              style="width: 100%"
+            >
+              <thead>
+                <tr
+                  class="
+                    text-start text-muted
+                    fw-bolder
+                    fs-7
+                    text-uppercase
+                    gs-0
+                  "
+                >
+                  <th class="w-50px text-center">No</th>
+                  <th class="w-100px text-center">Nama Shift</th>
+                  <th class="w-100px text-center">Jam Mulai</th>
+                  <th class="w-100px text-center">Jam Akhir</th>
+                  <th class="w-100px text-center">Kapasitas</th>
+                  <th class="w-100px text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(shift, no) in setShift.data"
+                  :key="shift.id"
+                  class="text-center"
+                >
+                  <td>{{ ++no }}</td>
+                  <td>{{ shift.nama_shift }}</td>
+                  <td>{{ formatTime(shift.jam_mulai) }} WIB</td>
+                  <td>{{ formatTime(shift.jam_selesai) }} WIB</td>
+                  <td>{{ shift.kapasitas }}</td>
+                  <td class="text-center">
+                    <a
+                      data-toggle="tooltip"
+                      data-bs-toggle="modal"
+                      :data-bs-target="'#edit_shift_' + shift.id_shift"
+                      data-placement="top"
+                      title="Edit"
+                      @mouseover="crud(shift.id_shift, shift, 'update')"
+                      href="#"
+                      class="
+                        btn btn-icon btn-bg-light btn-active-text-primary btn-sm
+                        me-1
+                      "
+                      ><span class="bi bi-pencil" aria-hidden="true"></span
+                    ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <!--end::Col-->
     </div>
+    <!--end::Table container-->
+
     <!--end::Row-->
   </div>
 </template>
 
 <script>
-import TambahShift from "@/components/TambahShift.vue";
-import EditShift from "@/components/EditShift.vue";
-import axios from "axios";
+import CrudOnePage from "@/components/CrudOnePage.vue";
 import $ from "jquery";
-import Swal from "sweetalert2";
+import moment from "moment";
+import Crud from "@/components/Crud.vue";
 export default {
   name: "Shift",
   components: {
-    TambahShift,
-    EditShift,
+    CrudOnePage,
+    Crud,
   },
   data() {
     return {
       no: 1,
       setShift: [],
+      edit: 0,
+      crudOnePage: {},
+      crudField: [
+        {
+          type: "text",
+          title: "Nama Shift",
+          name: "nama_shift",
+          required: true,
+        },
+        {
+          type: "time",
+          title: "Jam Masuk",
+          name: "jam_mulai",
+          required: true,
+        },
+        {
+          type: "time",
+          title: "Jam Selesai",
+          name: "jam_selesai",
+          required: true,
+        },
+        {
+          type: "number",
+          title: "Kapasitas",
+          name: "kapasitas",
+          required: true,
+        },
+        {
+          type: "select",
+          title: "Status",
+          name: "status",
+          required: true,
+          data: [
+            {
+              text: "Aktif",
+              value: "Aktif",
+            },
+            {
+              text: "Nonaktif",
+              value: "Nonaktif",
+            },
+          ],
+          value: "",
+        },
+      ],
+      defaultField: [],
     };
   },
   methods: {
-    clickAktif(no, id) {
-      this.setShift.data[no].status = "Aktif";
-      axios
-        .patch("/shift/" + id, this.setShift.data[no])
-        .then()
-        .catch((error) => console.log(error));
+    formatTime(time) {
+      return moment(time, "HH:mm:ss").format("HH:mm");
     },
-    clickNonaktif(no, id) {
-      this.setShift.data[no].status = "Nonaktif";
-      axios
-        .patch("/shift/" + id, this.setShift.data[no])
-        .then()
-        .catch((error) => console.log(error));
-    },
-  },
-  mounted() {
-    axios
-      .get("/shift")
-      .then((r) => {
-        this.setShift = r.data;
+    multipleUrl(value) {
+      if (value.url == "/shift") {
+        this.setShift = value;
         $(document).ready(function () {
-          $("#shift").DataTable({
+          $("#shift_table").DataTable({
             responsive: true,
             ordering: false,
           });
         });
-      })
-      .catch(function (error) {
-        if (error.response.status === 401) {
-          Swal.fire({
-            text: "Sesi telah berakhir, silahkan login kembali",
-            icon: "error",
-            buttonsStyling: !1,
-            confirmButtonText: "Ok",
-            customClass: {
-              confirmButton: "btn btn-primary order-2",
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              localStorage.removeItem("token");
-              window.location.href = "/login";
+      }
+    },
+    closeModal(r) {
+      if (r == false) {
+        for (let i = 0; i < this.crudField.length; i++) {
+          const element = this.crudField[i];
+          element.value = "";
+          delete element.selected;
+        }
+      }
+    },
+    crud(id, data, crud) {
+      if (crud == "create") {
+        for (let i = 0; i < this.crudField.length; i++) {
+          const element = this.crudField[i];
+          element.value = "";
+        }
+        this.crudOnePage = {
+          idmodal: "tambah_shift",
+          crud: "create",
+          name: "Tambah Data Shift",
+          fields: this.crudField,
+          url: "/shift",
+          method: "post",
+          fieldDefaultAxios: this.defaultField,
+        };
+      } else {
+        for (let i = 0; i < this.crudField.length; i++) {
+          const element = this.crudField[i];
+          Object.keys(data).map(function (key) {
+            if (key == element.name) {
+              element.value = data[key];
             }
           });
+          if (element.type == "select") {
+            element.selected = element.data.find(
+              (option) => option.value == element.value
+            );
+          }
         }
-      });
+
+        this.crudOnePage = {
+          idmodal: "edit_shift_" + id,
+          crud: "update",
+          name: "Edit Data Shift",
+          fields: this.crudField,
+          url: "/shift/" + id,
+          method: "put",
+          fieldDefaultAxios: this.defaultField,
+        };
+      }
+    },
   },
 };
 </script>
-
-<style></style>

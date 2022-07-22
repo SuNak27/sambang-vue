@@ -243,9 +243,12 @@ export default {
                 } else if (result.isDenied) {
                   Swal.fire({
                     title: "Error Detail",
-                    text: error.response.data.error
-                      ? error.response.data.error
-                      : "",
+                    html: error.response.data.data
+                      .map((item) => {
+                        console.log(item.message);
+                        return `${item.message}<br/>`;
+                      })
+                      .join(""),
                     icon: "info",
                     showCancelButton: true,
                     buttonsStyling: !1,
