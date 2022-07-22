@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
+  <div class="wilayah">
     <!--begin::Row-->
     <CrudOnePage v-bind="crudOnePage" @modal="closeModal" />
     <Crud
       v-bind="{
-        multipleUrl: [{ url: '/shift' }],
+        multipleUrl: [{ url: '/wilayah' }],
       }"
       @multipleResponse="multipleUrl"
     />
@@ -12,7 +12,7 @@
       <div class="card mb-5 mb-xl-8">
         <div class="card-header">
           <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bolder fs-3 mb-1">Data Shift</span>
+            <span class="card-label fw-bolder fs-3 mb-1">Data Wilayah</span>
           </h3>
           <div class="card-toolbar">
             <div
@@ -23,7 +23,7 @@
                 href="#"
                 class="btn btn-sm btn-success w-150px"
                 data-bs-toggle="modal"
-                data-bs-target="#tambah_shift"
+                data-bs-target="#tambah_wilayah"
                 type="button"
                 @mouseover="crud(null, null, 'create')"
                 >Tambah Data</a
@@ -34,7 +34,7 @@
         <div class="card-body py-3">
           <div class="table-responsive">
             <table
-              id="shift_table"
+              id="wilayah_table"
               class="table table-bordered dt-responsive nowrap"
               style="width: 100%"
             >
@@ -49,34 +49,33 @@
                   "
                 >
                   <th class="w-50px text-center">No</th>
-                  <th class="w-100px text-center">Nama Shift</th>
-                  <th class="w-100px text-center">Jam Mulai</th>
-                  <th class="w-100px text-center">Jam Akhir</th>
-                  <th class="w-100px text-center">Kapasitas</th>
+                  <th class="w-100px text-center">Nama Wilayah</th>
                   <th class="w-100px text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
-                  v-for="(shift, no) in setShift.data"
-                  :key="shift.id"
+                  v-for="(wilayah, no) in setWilayah.data"
+                  :key="wilayah.id_wilayah"
                   class="text-center"
-                  :class="shift.status == 'Nonaktif' ? 'text-danger' : ''"
+                  :class="wilayah.status == 'Nonaktif' ? 'text-danger' : ''"
                 >
                   <td>{{ ++no }}</td>
-                  <td>{{ shift.nama_shift }}</td>
-                  <td>{{ formatTime(shift.jam_mulai) }} WIB</td>
-                  <td>{{ formatTime(shift.jam_selesai) }} WIB</td>
-                  <td>{{ shift.kapasitas }}</td>
+                  <td>{{ wilayah.nama_wilayah }}</td>
                   <td class="text-center">
                     <a
                       data-toggle="tooltip"
                       data-bs-toggle="modal"
-                      :data-bs-target="'#edit_shift_' + shift.id_shift"
+                      :data-bs-target="'#edti_wilayah_' + wilayah.id_wilayah"
                       data-placement="top"
                       title="Edit"
                       @mouseover="
-                        crud(shift.id_shift, shift, 'read', 'View Data')
+                        crud(
+                          wilayah.id_wilayah,
+                          wilayah,
+                          'read',
+                          'View Data Wilayah'
+                        )
                       "
                       href="#"
                       class="
@@ -88,11 +87,16 @@
                     <a
                       data-toggle="tooltip"
                       data-bs-toggle="modal"
-                      :data-bs-target="'#edit_shift_' + shift.id_shift"
+                      :data-bs-target="'#edti_wilayah_' + wilayah.id_wilayah"
                       data-placement="top"
                       title="Edit"
                       @mouseover="
-                        crud(shift.id_shift, shift, 'update', 'Edit Data Shift')
+                        crud(
+                          wilayah.id_wilayah,
+                          wilayah,
+                          'update',
+                          'Edit Data Wilayah'
+                        )
                       "
                       href="#"
                       class="
@@ -129,32 +133,14 @@ export default {
   data() {
     return {
       no: 1,
-      setShift: [],
+      setWilayah: [],
       edit: 0,
       crudOnePage: {},
       crudField: [
         {
           type: "text",
-          title: "Nama Shift",
-          name: "nama_shift",
-          required: true,
-        },
-        {
-          type: "time",
-          title: "Jam Masuk",
-          name: "jam_mulai",
-          required: true,
-        },
-        {
-          type: "time",
-          title: "Jam Selesai",
-          name: "jam_selesai",
-          required: true,
-        },
-        {
-          type: "number",
-          title: "Kapasitas",
-          name: "kapasitas",
+          title: "Nama Wilayah",
+          name: "nama_wilayah",
           required: true,
         },
         {
@@ -183,10 +169,10 @@ export default {
       return moment(time, "HH:mm:ss").format("HH:mm");
     },
     multipleUrl(value) {
-      if (value.url == "/shift") {
-        this.setShift = value;
+      if (value.url == "/wilayah") {
+        this.setWilayah = value;
         $(document).ready(function () {
-          $("#shift_table").DataTable({
+          $("#wilayah_table").DataTable({
             responsive: true,
             ordering: false,
           });
@@ -209,11 +195,11 @@ export default {
           element.value = "";
         }
         this.crudOnePage = {
-          idmodal: "tambah_shift",
+          idmodal: "tambah_wilayah",
           crud: "create",
-          name: "Tambah Data Shift",
+          name: "Tambah Data Wilayah",
           fields: this.crudField,
-          url: "/shift",
+          url: "/wilayah",
           method: "post",
           fieldDefaultAxios: this.defaultField,
         };
@@ -233,11 +219,11 @@ export default {
         }
 
         this.crudOnePage = {
-          idmodal: "edit_shift_" + id,
+          idmodal: "edti_wilayah_" + id,
           crud: crud,
           name: title,
           fields: this.crudField,
-          url: "/shift/" + id,
+          url: "/wilayah/" + id,
           method: "put",
           fieldDefaultAxios: this.defaultField,
         };

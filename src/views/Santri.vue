@@ -135,7 +135,7 @@ import Crud from "@/components/Crud.vue";
 import CrudOnePage from "@/components/CrudOnePage.vue";
 import $ from "jquery";
 export default {
-  name: "SettingHari",
+  name: "Santri",
   components: {
     Crud,
     CrudOnePage,

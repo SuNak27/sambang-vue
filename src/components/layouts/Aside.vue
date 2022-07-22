@@ -138,6 +138,32 @@
               <span class="menu-title">Santri</span>
             </router-link>
           </div>
+          <div class="menu-item">
+            <router-link
+              :class="
+                $route.name == 'Wilayah' ? 'menu-link active' : 'menu-link'
+              "
+              to="/wilayah"
+            >
+              <span class="menu-icon">
+                <i class="bi bi-hospital fs-3"></i>
+              </span>
+              <span class="menu-title">Wilayah</span>
+            </router-link>
+          </div>
+          <div class="menu-item">
+            <router-link
+              :class="
+                $route.name == 'Lembaga' ? 'menu-link active' : 'menu-link'
+              "
+              to="/lembaga"
+            >
+              <span class="menu-icon">
+                <i class="bi bi-book fs-3"></i>
+              </span>
+              <span class="menu-title">Lembaga</span>
+            </router-link>
+          </div>
         </div>
         <!--end::Menu-->
       </div>

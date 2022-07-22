@@ -7,6 +7,8 @@ import Home from "../views/Home.vue";
 import SettingHari from "../views/SettingHari.vue";
 import Shift from "../views/Shift.vue";
 import Santri from "../views/Santri.vue";
+import Wilayah from "../views/Wilayah.vue";
+import Lembaga from "../views/Lembaga.vue";
 import Reservasi from "../views/Reservasi.vue";
 import TambahReservasi from "../views/TambahReservasi.vue";
 import DetailReservasi from "../views/DetailReservasi.vue";
@@ -21,7 +23,7 @@ import "@/assets/css/nprogress.css";
 // axios.defaults.headers.common["X-Sambang-Token"] =
 //   localStorage.getItem("token");
 
-axios.defaults.baseURL = "http://localhost:3000/api/";
+axios.defaults.baseURL = "https://api-sambang.belanj.id/api/";
 NProgress.configure({ showSpinner: false });
 axios.interceptors.request.use((config) => {
   NProgress.start();
@@ -136,6 +138,24 @@ const routes = [
         meta: {
           is_admin: true,
           title: "Santri",
+        },
+      },
+      {
+        path: "/wilayah",
+        name: "Wilayah",
+        component: Wilayah,
+        meta: {
+          is_admin: true,
+          title: "Wilayah",
+        },
+      },
+      {
+        path: "/lembaga",
+        name: "Lembaga",
+        component: Lembaga,
+        meta: {
+          is_admin: true,
+          title: "Lembaga",
         },
       },
     ],

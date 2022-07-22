@@ -63,6 +63,7 @@
                   v-for="(hari, no) in setHari.data"
                   :key="hari.id_hari"
                   class="text-center"
+                  :class="hari.status == 'Nonaktif' ? 'text-danger' : ''"
                 >
                   <td>{{ ++no }}</td>
                   <td>{{ hari.nama }}</td>
