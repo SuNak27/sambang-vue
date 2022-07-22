@@ -17,11 +17,8 @@
           <!--end::Header-->
           <!--begin::Body-->
           <div class="card-body py-3">
-            <p class="text-muted mb-3" v-if="user.role == 'sysadmin'">
-              Ketentuan Kunjungan Wali Santri
-            </p>
+            <p class="text-muted mb-3">Ketentuan Kunjungan Wali Santri</p>
             <div
-              v-if="user.role == 'sysadmin'"
               class="
                 bg-light-primary
                 rounded
