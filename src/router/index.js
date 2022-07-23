@@ -9,11 +9,11 @@ import Shift from "../views/Shift.vue";
 import Santri from "../views/Santri.vue";
 import Wilayah from "../views/Wilayah.vue";
 import Lembaga from "../views/Lembaga.vue";
+import Informasi from "../views/Informasi.vue";
 import Reservasi from "../views/Reservasi.vue";
 import TambahReservasi from "../views/TambahReservasi.vue";
 import DetailReservasi from "../views/DetailReservasi.vue";
 import History from "../views/History.vue";
-import Informasi from "../views/Informasi.vue";
 import Print from "../views/Print.vue";
 
 import axios from "axios";
@@ -24,6 +24,7 @@ import "@/assets/css/nprogress.css";
 //   localStorage.getItem("token");
 
 axios.defaults.baseURL = "https://api-sambang.belanj.id/api/";
+// axios.defaults.baseURL = "http://localhost:3000/api/";
 NProgress.configure({ showSpinner: false });
 axios.interceptors.request.use((config) => {
   NProgress.start();

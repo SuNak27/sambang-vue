@@ -77,7 +77,23 @@
                       :data-bs-target="'#edit_shift_' + hari.id_hari"
                       data-placement="top"
                       title="Edit"
-                      @mouseover="crud(hari.id_hari, hari, 'update')"
+                      @mouseover="crud(hari.id_hari, hari, 'read', 'View Data')"
+                      href="#"
+                      class="
+                        btn btn-icon btn-bg-light btn-active-text-primary btn-sm
+                        me-1
+                      "
+                      ><span class="bi bi-eye" aria-hidden="true"></span
+                    ></a>
+                    <a
+                      data-toggle="tooltip"
+                      data-bs-toggle="modal"
+                      :data-bs-target="'#edit_shift_' + hari.id_hari"
+                      data-placement="top"
+                      title="Edit"
+                      @mouseover="
+                        crud(hari.id_hari, hari, 'update', 'Update Data Hari')
+                      "
                       href="#"
                       class="
                         btn btn-icon btn-bg-light btn-active-text-primary btn-sm
@@ -213,7 +229,7 @@ export default {
         }
       }
     },
-    crud(id, data, crud) {
+    crud(id, data, crud, title) {
       if (crud == "create") {
         for (let i = 0; i < this.crudField.length; i++) {
           const element = this.crudField[i];
@@ -245,8 +261,8 @@ export default {
 
         this.crudOnePage = {
           idmodal: "edit_shift_" + id,
-          crud: "update",
-          name: "Edit Data Hari",
+          crud: crud,
+          name: title,
           fields: this.crudField,
           url: "/hari/" + id,
           method: "put",

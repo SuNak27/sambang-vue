@@ -84,6 +84,13 @@
           data-kt-menu="true"
         >
           <div class="menu-item">
+            <div class="menu-content pt-4 pb-2">
+              <span class="menu-section text-muted text-uppercase fs-8 ls-1"
+                >Dashboard</span
+              >
+            </div>
+          </div>
+          <div class="menu-item">
             <router-link
               :class="$route.name == 'Home' ? 'menu-link active' : 'menu-link'"
               to="/"
@@ -162,6 +169,19 @@
                 <i class="bi bi-book fs-3"></i>
               </span>
               <span class="menu-title">Lembaga</span>
+            </router-link>
+          </div>
+          <div class="menu-item">
+            <router-link
+              :class="
+                $route.name == 'Informasi' ? 'menu-link active' : 'menu-link'
+              "
+              to="/informasi"
+            >
+              <span class="menu-icon">
+                <i class="bi bi-info-circle fs-3"></i>
+              </span>
+              <span class="menu-title">Informasi</span>
             </router-link>
           </div>
         </div>
