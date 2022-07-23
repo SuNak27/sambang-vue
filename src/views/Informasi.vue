@@ -52,7 +52,7 @@
                   <th class="w-100px text-center">Nama Informasi</th>
                   <th class="w-100px text-center">Tanggal Mulai</th>
                   <th class="w-100px text-center">tanggal Selesai</th>
-                  <th class="w-100px text-center">Status</th>
+                  <th class="w-100px text-center">Status Kunjungan</th>
                   <th class="w-100px text-center">Actions</th>
                 </tr>
               </thead>
@@ -172,16 +172,16 @@ export default {
         },
         {
           type: "select",
-          title: "Status",
+          title: "Status Kunjungan",
           name: "status",
           required: true,
           data: [
             {
-              text: "Buka",
+              text: "Dibuka",
               value: "Buka",
             },
             {
-              text: "Tutup",
+              text: "Ditutup",
               value: "Tutup",
             },
           ],
