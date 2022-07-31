@@ -10,6 +10,7 @@ import Santri from "../views/Santri.vue";
 import Wilayah from "../views/Wilayah.vue";
 import Lembaga from "../views/Lembaga.vue";
 import Informasi from "../views/Informasi.vue";
+import JenisMahrom from "../views/JenisMahrom.vue";
 import Reservasi from "../views/Reservasi.vue";
 import TambahReservasi from "../views/TambahReservasi.vue";
 import DetailReservasi from "../views/DetailReservasi.vue";
@@ -23,8 +24,8 @@ import "@/assets/css/nprogress.css";
 // axios.defaults.headers.common["X-Sambang-Token"] =
 //   localStorage.getItem("token");
 
-axios.defaults.baseURL = "https://api-sambang.belanj.id/api/";
-// axios.defaults.baseURL = "http://localhost:3000/api/";
+// axios.defaults.baseURL = "https://api-sambang.belanj.id/api/";
+axios.defaults.baseURL = "http://localhost:3000/api/";
 NProgress.configure({ showSpinner: false });
 axios.interceptors.request.use((config) => {
   NProgress.start();
@@ -157,6 +158,15 @@ const routes = [
         meta: {
           is_admin: true,
           title: "Lembaga",
+        },
+      },
+      {
+        path: "/jenis-mahrom",
+        name: "JenisMahrom",
+        component: JenisMahrom,
+        meta: {
+          is_admin: true,
+          title: "Jenis Mahrom",
         },
       },
     ],
