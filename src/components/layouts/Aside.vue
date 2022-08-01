@@ -102,6 +102,19 @@
             </router-link>
           </div>
           <div class="menu-item">
+            <router-link
+              :class="
+                $route.name == 'Mahrom' ? 'menu-link active' : 'menu-link'
+              "
+              to="/mahrom"
+            >
+              <span class="menu-icon">
+                <i class="bi bi-person-check-fill fs-3"></i>
+              </span>
+              <span class="menu-title">Data Mahrom</span>
+            </router-link>
+          </div>
+          <div class="menu-item">
             <div class="menu-content pt-4 pb-2">
               <span class="menu-section text-muted text-uppercase fs-8 ls-1"
                 >Master Data</span

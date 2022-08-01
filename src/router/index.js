@@ -11,6 +11,7 @@ import Wilayah from "../views/Wilayah.vue";
 import Lembaga from "../views/Lembaga.vue";
 import Informasi from "../views/Informasi.vue";
 import JenisMahrom from "../views/JenisMahrom.vue";
+import Mahrom from "../views/Mahrom.vue";
 import Reservasi from "../views/Reservasi.vue";
 import TambahReservasi from "../views/TambahReservasi.vue";
 import DetailReservasi from "../views/DetailReservasi.vue";
@@ -167,6 +168,15 @@ const routes = [
         meta: {
           is_admin: true,
           title: "Jenis Mahrom",
+        },
+      },
+      {
+        path: "/mahrom",
+        name: "Mahrom",
+        component: Mahrom,
+        meta: {
+          is_admin: true,
+          title: "Mahrom",
         },
       },
     ],
