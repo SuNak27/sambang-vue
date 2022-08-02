@@ -118,25 +118,21 @@
                 <a
                   class="nav-link text-active-primary pb-4 active"
                   data-bs-toggle="tab"
-                  href="#keluarga"
-                  >Keluarga Non Santri</a
+                  href="#santri"
+                  >Santri</a
                 >
               </li>
               <li class="nav-item">
                 <a
                   class="nav-link text-active-primary pb-4"
                   data-bs-toggle="tab"
-                  href="#santri"
-                  >Santri</a
+                  href="#keluarga"
+                  >Keluarga Non Santri</a
                 >
               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-              <div
-                class="tab-pane fade show active"
-                id="keluarga"
-                role="tabpanel"
-              >
+              <div class="tab-pane fade show" id="keluarga" role="tabpanel">
                 <div class="card pt-4 mb-6 mb-xl-9">
                   <div class="card-header border-0">
                     <div class="card-title">
@@ -191,7 +187,11 @@
                   </div>
                 </div>
               </div>
-              <div class="tab-pane fade" id="santri" role="tabpanel">
+              <div
+                class="tab-pane fade show active"
+                id="santri"
+                role="tabpanel"
+              >
                 <div class="card pt-4 mb-6 mb-xl-9">
                   <div class="card-header border-0">
                     <div class="card-title">
@@ -262,7 +262,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import $ from "jquery";
 import Crud from "@/components/Crud.vue";
 
@@ -297,28 +296,6 @@ export default {
         });
       });
     },
-  },
-  mounted() {
-    axios
-      .get("/shift")
-      .then(
-        (response) =>
-          (this.shift = response.data.data.map((item) => {
-            return {
-              value: {
-                id: item.id,
-                kode_shift: item.kode_shift,
-                nama_shift: item.nama_shift,
-                jam_masuk: item.jam_masuk,
-                jam_keluar: item.jam_keluar,
-              },
-              text: item.nama_shift,
-            };
-          }))
-      )
-      .catch(function (error) {
-        console.log(error);
-      });
   },
 };
 </script>
