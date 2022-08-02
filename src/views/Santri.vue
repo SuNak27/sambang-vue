@@ -147,12 +147,6 @@ export default {
       crudOnePage: {},
       crudField: [
         {
-          type: "text",
-          title: "UID Santri",
-          name: "uid_santri",
-          required: true,
-        },
-        {
           type: "number",
           title: "NIS Santri",
           name: "nis",
