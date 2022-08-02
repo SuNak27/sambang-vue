@@ -163,19 +163,6 @@
           <div class="menu-item">
             <router-link
               :class="
-                $route.name == 'JenisMahrom' ? 'menu-link active' : 'menu-link'
-              "
-              to="/jenis-mahrom"
-            >
-              <span class="menu-icon">
-                <i class="bi bi-person-video fs-3"></i>
-              </span>
-              <span class="menu-title">Jenis Mahrom</span>
-            </router-link>
-          </div>
-          <div class="menu-item">
-            <router-link
-              :class="
                 $route.name == 'Wilayah' ? 'menu-link active' : 'menu-link'
               "
               to="/wilayah"
