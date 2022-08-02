@@ -104,7 +104,9 @@
           <div class="menu-item">
             <router-link
               :class="
-                $route.name == 'Mahrom' ? 'menu-link active' : 'menu-link'
+                $route.name == 'Mahrom' || $route.name == 'DetailMahrom'
+                  ? 'menu-link active'
+                  : 'menu-link'
               "
               to="/mahrom"
             >

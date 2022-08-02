@@ -52,27 +52,17 @@
                   <td>{{ mahrom.no_kk }}</td>
                   <td>{{ mahrom.nik }}</td>
                   <td class="text-center">
-                    <a
+                    <router-link
                       data-toggle="tooltip"
-                      data-bs-toggle="modal"
-                      :data-bs-target="'#edti_lembaga_' + mahrom.id_mahrom"
                       data-placement="top"
-                      title="Edit"
-                      @mouseover="
-                        crud(
-                          mahrom.id_mahrom,
-                          mahrom,
-                          'read',
-                          'View Data mahrom'
-                        )
-                      "
-                      href="#"
+                      title="View"
+                      :to="'/mahrom/' + mahrom.no_mahrom"
                       class="
                         btn btn-icon btn-bg-light btn-active-text-primary btn-sm
                         me-1
                       "
                       ><span class="bi bi-eye" aria-hidden="true"></span
-                    ></a>
+                    ></router-link>
                   </td>
                 </tr>
               </tbody>
