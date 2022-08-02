@@ -35,15 +35,28 @@
                 >
                   <thead>
                     <tr class="border-0 fw-bolder text-muted">
+                      <th class="min-w-100px text-center">Nama Wali</th>
                       <th class="min-w-100px text-center">No KK</th>
                       <th class="min-w-100px text-center">NIK</th>
-                      <th class="min-w-100px text-center">Nama Wali</th>
                       <th class="min-w-100px text-center">No Telp</th>
                     </tr>
                   </thead>
 
                   <tbody class="text-center">
                     <tr>
+                      <td>
+                        <p
+                          class="
+                            text-dark
+                            fw-bolder
+                            text-hover-primary
+                            fs-6
+                            d-inline
+                          "
+                        >
+                          {{ wali_santri.nama_wali }}
+                        </p>
+                      </td>
                       <td>
                         <p
                           class="
@@ -68,19 +81,6 @@
                           "
                         >
                           {{ wali_santri.nik }}
-                        </p>
-                      </td>
-                      <td>
-                        <p
-                          class="
-                            text-dark
-                            fw-bolder
-                            text-hover-primary
-                            fs-6
-                            d-inline
-                          "
-                        >
-                          {{ wali_santri.nama_wali }}
                         </p>
                       </td>
                       <td>
